@@ -73,11 +73,17 @@ export class User extends EntityHelper {
   })
   photo?: FileEntity | null;
 
+  @Index()
+  @Column({ type: String, nullable: true })
+  playerName: string | null;
+
+  @Exclude()
   @ManyToOne(() => Role, {
     eager: true,
   })
   role?: Role | null;
 
+  @Exclude()
   @ManyToOne(() => Status, {
     eager: true,
   })
@@ -88,12 +94,15 @@ export class User extends EntityHelper {
   @Exclude({ toPlainOnly: true })
   hash: string | null;
 
+  @Exclude()
   @CreateDateColumn()
   createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @Exclude()
   @DeleteDateColumn()
   deletedAt: Date;
 }
