@@ -31,6 +31,7 @@ import { MailerModule } from './mailer/mailer.module';
 import { MatchModule } from './match/match.module';
 import { LeagueModule } from './league/league.module';
 import { PlayerModule } from './player/player.module';
+import { NewsModule } from './news/news.module';
 
 @Module({
   imports: [
@@ -93,6 +94,7 @@ import { PlayerModule } from './player/player.module';
     MatchModule,
     LeagueModule,
     PlayerModule,
+    NewsModule,
   ],
 })
 export class AppModule {}

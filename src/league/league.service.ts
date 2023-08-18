@@ -61,7 +61,7 @@ export class LeagueService {
       throw new HttpException(`Player with id: ${addPlayerDto.id} already registered`, HttpStatus.BAD_REQUEST  )
     }
 
-    const player = await this.playerService.create(id)
+    const player = await this.playerService.create(addPlayerDto.id)
 
     if(!player) { throw new HttpException(`No player with id: ${addPlayerDto.id}`, HttpStatus.NOT_FOUND  )}
 
