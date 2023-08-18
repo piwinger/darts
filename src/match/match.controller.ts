@@ -5,8 +5,10 @@ import { UpdateMatchDto } from './dto/update-match.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { NullableType } from 'src/utils/types/nullable.type';
 import { Match } from './entities/match.entity';
+import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard('jwt'))
+@ApiTags('Match')
 @Controller('match')
 export class MatchController {
   constructor(private readonly matchService: MatchService) {}

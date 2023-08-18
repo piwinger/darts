@@ -29,6 +29,8 @@ import { AllConfigType } from './config/config.type';
 import { SessionModule } from './session/session.module';
 import { MailerModule } from './mailer/mailer.module';
 import { MatchModule } from './match/match.module';
+import { LeagueModule } from './league/league.module';
+import { PlayerModule } from './player/player.module';
 
 @Module({
   imports: [
@@ -89,6 +91,8 @@ import { MatchModule } from './match/match.module';
     MailerModule,
     HomeModule,
     MatchModule,
+    LeagueModule,
+    PlayerModule,
   ],
 })
 export class AppModule {}

@@ -10,6 +10,7 @@ import {
   UpdateDateColumn,
   BeforeInsert,
   BeforeUpdate,
+  TableInheritance,
 } from 'typeorm';
 import { Role } from '../../roles/entities/role.entity';
 import { Status } from '../../statuses/entities/status.entity';
@@ -68,14 +69,13 @@ export class User extends EntityHelper {
   @Column({ type: String, nullable: true })
   lastName: string | null;
 
+  @Column({type: String, nullable: true})
+  playerName: string | null;
+
   @ManyToOne(() => FileEntity, {
     eager: true,
   })
   photo?: FileEntity | null;
-
-  @Index()
-  @Column({ type: String, nullable: true })
-  playerName: string | null;
 
   @Exclude()
   @ManyToOne(() => Role, {

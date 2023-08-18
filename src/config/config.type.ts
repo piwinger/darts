@@ -59,15 +59,11 @@ export type GoogleConfig = {
 };
 
 export type MailConfig = {
-  port: number;
-  host?: string;
+  service?: string;
   user?: string;
   password?: string;
   defaultEmail?: string;
   defaultName?: string;
-  ignoreTLS: boolean;
-  secure: boolean;
-  requireTLS: boolean;
 };
 
 export type TwitterConfig = {

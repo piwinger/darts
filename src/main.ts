@@ -32,6 +32,11 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('API')
     .setDescription('API docs')
+    .addTag('Users')            
+    .addTag('Match') 
+    .addTag('League')
+    .addTag('Auth')
+    .addTag('Files')
     .setVersion('1.0')
     .addBearerAuth()
     .build();

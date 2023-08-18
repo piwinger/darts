@@ -5,4 +5,7 @@ export class CreateMatchDto {
     // @ApiProperty()
     @IsNotEmpty()
     opponentId: number
+
+    @IsNotEmpty()
+    leagueId: number
 }

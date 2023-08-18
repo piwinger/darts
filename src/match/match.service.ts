@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Match } from './entities/match.entity';
 import { Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
+import { LeagueService } from 'src/league/league.service';
 
 @Injectable()
 export class MatchService {
@@ -12,6 +13,7 @@ export class MatchService {
     @InjectRepository(Match)
     private matchRepository: Repository<Match>,
     private usersService: UsersService,
+    private leagueService: LeagueService
   ) { }
 
   async create(createMatchDto: CreateMatchDto, challengerId: number) {
@@ -23,11 +25,14 @@ export class MatchService {
       throw new HttpException(`no user with id: ${createMatchDto.opponentId}`, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
+    const league = await this.leagueService.findOne(createMatchDto.leagueId, false)
+
     const challenger = await this.usersService.findOne({ id: challengerId })
     return this.matchRepository.save(
       this.matchRepository.create({
         challenger: challenger!,
-        opponent: opponent
+        opponent: opponent,
+        league: league
       })
     )
   }
@@ -69,5 +74,9 @@ export class MatchService {
 
   remove(id: number) {
     return this.matchRepository.softDelete(id);
+  }
+
+  calculatePoints(points: number, opponentPoints: number) {
+    return points > opponentPoints ? 10 : -10;
   }
 }
