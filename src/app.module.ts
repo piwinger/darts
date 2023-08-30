@@ -32,6 +32,7 @@ import { MatchModule } from './match/match.module';
 import { LeagueModule } from './league/league.module';
 import { PlayerModule } from './player/player.module';
 import { NewsModule } from './news/news.module';
+import { EloRankingService } from './elo-ranking/elo-ranking.service';
 
 @Module({
   imports: [
@@ -96,5 +97,6 @@ import { NewsModule } from './news/news.module';
     PlayerModule,
     NewsModule,
   ],
+  providers: [EloRankingService],
 })
 export class AppModule {}

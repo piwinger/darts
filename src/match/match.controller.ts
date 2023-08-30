@@ -6,6 +6,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { NullableType } from 'src/utils/types/nullable.type';
 import { Match } from './entities/match.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { User } from 'src/utils/decorators/user.decorator';
 
 @UseGuards(AuthGuard('jwt'))
 @ApiTags('Match')
@@ -17,8 +18,8 @@ export class MatchController {
   constructor(private readonly matchService: MatchService) {}
 
   @Post()
-  create(@Body() createMatchDto: CreateMatchDto, @Request() req) {
-    return this.matchService.create(createMatchDto, req.user.id);
+  create(@Body() createMatchDto: CreateMatchDto, @User("id") userId) {
+    return this.matchService.create(createMatchDto, userId);
   }
 
   @Get()

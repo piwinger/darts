@@ -1,11 +1,9 @@
 import { UsersService } from './../users/users.service';
 import { Injectable } from '@nestjs/common';
-import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { Player } from './entities/player.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class PlayerService {

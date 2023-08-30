@@ -3,9 +3,11 @@ import { LeagueService } from './league.service';
 import { CreateLeagueDto } from './dto/create-league.dto';
 import { UpdateLeagueDto } from './dto/update-league.dto';
 import { AddPlayerDto } from './dto/add-player.dt';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from 'src/utils/decorators/user.decorator';
 
+@ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @ApiTags('League')
 @Controller({
@@ -26,8 +28,9 @@ export class LeagueController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.leagueService.findOne(+id);
+ 
+  findOne(@Param('id') id: string,  @User("id") userId) {
+    return this.leagueService.getLadder(+id, userId);
   }
 
   @Patch(':id')
