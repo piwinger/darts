@@ -9,7 +9,10 @@ import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard('jwt'))
 @ApiTags('Match')
-@Controller('match')
+@Controller({
+  path: 'match',
+  version: '1',
+})
 export class MatchController {
   constructor(private readonly matchService: MatchService) {}
 
