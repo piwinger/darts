@@ -49,7 +49,7 @@ export class LeagueService {
 
     if (me) {
       league.players.forEach(player => {
-        if (player.points >= me.points) {
+        if (player.points >= me.points && player.id !== me.id) {
           player.win = this.eloRanking.ifWins(me!.points, player.points);
           player.loss = this.eloRanking.ifLoses(me!.points, player.points);
           player.canBeChallenged = true
@@ -68,7 +68,7 @@ export class LeagueService {
     return `This action removes a #${id} league`;
   }
 
-  async addPlayer(id: number, addPlayerDto: AddPlayerDto) {
+  async addPlayer(id: number, userId: number) {
     const league = await this.repository.findOneOrFail({
       where: {
         id: id,
@@ -77,13 +77,12 @@ export class LeagueService {
       }
     });
 
-    if (league.players.find(player => player.user.id == addPlayerDto.id)) {
-      throw new HttpException(`Player with id: ${addPlayerDto.id} already registered`, HttpStatus.BAD_REQUEST)
+    if (league.players.find(player => player.user.id == userId)) {
+      throw new HttpException(`Player with id: ${userId} already registered`, HttpStatus.BAD_REQUEST)
     }
 
-    const player = await this.playerService.create(addPlayerDto.id)
-
-    if (!player) { throw new HttpException(`No player with id: ${addPlayerDto.id}`, HttpStatus.NOT_FOUND) }
+    const player = await this.playerService.create(userId)
+    if (!player) { throw new HttpException(`No player with id: ${userId}`, HttpStatus.NOT_FOUND) }
 
     league.players.push(player)
 

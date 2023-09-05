@@ -43,9 +43,8 @@ export class LeagueController {
     return this.leagueService.remove(+id);
   }
 
-  @Post(':id/player')
-  addPlayer(@Param('id') id: number, @Body() addPlayerDto: AddPlayerDto) {
-    console.log(id)
-    return this.leagueService.addPlayer(id, addPlayerDto)
+  @Post(':id/join')
+  addPlayer(@Param('id') id: number, @User("id") userId: number) {
+    return this.leagueService.addPlayer(id, userId)
   }
 }
