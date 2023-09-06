@@ -31,6 +31,10 @@ export class PlayerService {
     return this.repository.findOne({ where: {id: +id} });
   }
 
+  findOneByUserId(userId: number) {
+    return this.repository.findOne({where: {user: {id: userId}}})
+  }
+
   update(id: number, updatePlayerDto: UpdatePlayerDto) {
     return this.repository.update(id, updatePlayerDto)
   }

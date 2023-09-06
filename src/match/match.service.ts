@@ -34,7 +34,14 @@ export class MatchService {
       createMatchDto.leagueId,
     );
 
-    const challenger = await this.playerService.findOne(challengerId);
+    const challenger = await this.playerService.findOneByUserId(challengerId);
+
+    if(!challenger) {
+      throw new HttpException(
+        `no user with id: ${createMatchDto.opponentId}`,
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
 
     const match = this.matchRepository.create({
       challenger: challenger!,
