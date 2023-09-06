@@ -42,7 +42,8 @@ export class Match extends EntityHelper {
         enum: MatchStatus,
         default: MatchStatus.CHALLENGED,
     })
-
+    status: MatchStatus
+    
     @CreateDateColumn()
     createdAt: Date;
 
