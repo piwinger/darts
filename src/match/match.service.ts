@@ -4,7 +4,6 @@ import { UpdateMatchDto } from './dto/update-match.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Match } from './entities/match.entity';
 import { Repository } from 'typeorm';
-import { UsersService } from 'src/users/users.service';
 import { LeagueService } from 'src/league/league.service';
 import { PlayerService } from 'src/player/player.service';
 
@@ -13,10 +12,9 @@ export class MatchService {
   constructor(
     @InjectRepository(Match)
     private matchRepository: Repository<Match>,
-    private usersService: UsersService,
     private playerService: PlayerService,
     private leagueService: LeagueService,
-  ) {}
+  ) { }
 
   async create(createMatchDto: CreateMatchDto, challengerId: number) {
     const opponent = await this.playerService.findOne(
@@ -29,23 +27,20 @@ export class MatchService {
         HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
-    console.log(opponent);
 
     const league = await this.leagueService.findOne(
       createMatchDto.leagueId,
-      false,
     );
 
-    console.log(league);
+    const challenger = await this.playerService.findOne( challengerId );
 
-    const challenger = await this.usersService.findOne({ id: challengerId });
-    return this.matchRepository.save(
-      this.matchRepository.create({
-        challenger: challenger!,
-        opponent: opponent,
-        league: league,
-      }),
-    );
+    const match = this.matchRepository.create({
+      challenger: challenger!,
+      opponent: opponent,
+      league: league,
+    });
+    
+    return this.matchRepository.save(match);
   }
 
   findAll() {
@@ -88,9 +83,5 @@ export class MatchService {
 
   remove(id: number) {
     return this.matchRepository.softDelete(id);
-  }
-
-  calculatePoints(points: number, opponentPoints: number) {
-    return points > opponentPoints ? 10 : -10;
   }
 }

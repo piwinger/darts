@@ -1,6 +1,6 @@
 import { Exclude } from "class-transformer";
 import { League } from "src/league/entities/league.entity";
-import { User } from "src/users/entities/user.entity";
+import { Player } from "src/player/entities/player.entity";
 import { EntityHelper } from "src/utils/entity-helper";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
@@ -12,11 +12,11 @@ export class Match extends EntityHelper {
     @ManyToOne(() => League)
     league: League
 
-    @ManyToOne(() => User, { eager: true })
-    challenger: User
+    @ManyToOne(() => Player, { eager: true })
+    challenger: Player
 
-    @ManyToOne(() => User, { eager: true })
-    opponent: User
+    @ManyToOne(() => Player, { eager: true })
+    opponent: Player
 
     @Column({ default: 0 })
     challengerScore: number
