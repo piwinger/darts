@@ -9,7 +9,7 @@ export class NewsService {
   }
 
   findAll() {
-    return [`This action returns all news`];
+    return [{ id: 1, title: `Online!`, body: "Jetzt geht's los!" }];
   }
 
   findOne(id: number) {
