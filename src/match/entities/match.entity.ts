@@ -4,6 +4,13 @@ import { Player } from "src/player/entities/player.entity";
 import { EntityHelper } from "src/utils/entity-helper";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
+export enum MatchStatus {
+    CHALLENGED = 'challenged',
+    ACCEPTED = 'accepted',
+    DECLINED = 'declined',
+    DONE = 'done'
+}
+
 @Entity()
 export class Match extends EntityHelper {
     @PrimaryGeneratedColumn()
@@ -29,6 +36,12 @@ export class Match extends EntityHelper {
 
     @Column({ default: 0 })
     opponentPoints: number
+
+    @Column({
+        type: "enum",
+        enum: MatchStatus,
+        default: MatchStatus.CHALLENGED,
+    })
 
     @CreateDateColumn()
     createdAt: Date;
