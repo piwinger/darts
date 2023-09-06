@@ -35,7 +35,7 @@ export class EloRankingService {
         return this.processRating(odds, CHANCES.lost);
     }
 
-    processRating(odds, actualScore) {
+    private processRating(odds, actualScore) {
         var difference = actualScore - odds;
         var rating = Math.round(this.kFactor * difference);
 

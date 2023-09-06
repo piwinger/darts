@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsPositive, Min } from 'class-validator';
 
-export class UpdateMatchDto {
+export class PostResult {
     @IsNotEmpty()
     @Min(0)
     challengerScore: number

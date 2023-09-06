@@ -24,7 +24,7 @@ export class PlayerService {
   }
 
   findAll() {
-    return `This action returns all player`;
+    return this.repository.find();
   }
 
   findOne(id: number) {
@@ -32,10 +32,10 @@ export class PlayerService {
   }
 
   update(id: number, updatePlayerDto: UpdatePlayerDto) {
-    return `This action updates a #${id} player`;
+    return this.repository.update(id, updatePlayerDto)
   }
 
   remove(id: number) {
-    return `This action removes a #${id} player`;
+    return this.repository.softDelete(id)
   }
 }

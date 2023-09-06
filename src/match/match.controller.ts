@@ -1,13 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards } from '@nestjs/common';
 import { MatchService } from './match.service';
 import { CreateMatchDto } from './dto/create-match.dto';
-import { UpdateMatchDto } from './dto/update-match.dto';
+import { PostResult as MatchResult } from './dto/update-match.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { NullableType } from 'src/utils/types/nullable.type';
 import { Match } from './entities/match.entity';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/utils/decorators/user.decorator';
 
+@ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @ApiTags('Match')
 @Controller({
@@ -32,9 +33,14 @@ export class MatchController {
     return this.matchService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMatchDto: UpdateMatchDto) {
-    return this.matchService.update(+id, updateMatchDto);
+  @Post(':id/result')
+  result(@Param('id') id: string, @Body() updateMatchResultDto: MatchResult, @User("id") userId) {
+    return this.matchService.update(+id, updateMatchResultDto, userId);
+  }
+
+  @Post(':id/accept')
+  acceptMatch(@Param('id') id: string, @User("id") userId) {
+    return this.matchService.acceptChallenge(+id, userId);
   }
 
   @Delete(':id')
